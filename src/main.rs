@@ -68,14 +68,18 @@ async fn delete_user(state: web::types::State<Arc<AppState>>, id: web::types::Pa
 async fn main() -> std::io::Result<()> {
 	dotenvy::dotenv().ok();
 	pretty_env_logger::init();
-
+	info!("Starting server...");
 	let client = PrismaClient::_builder().build().await.unwrap();
+	info!("Connected to database!");
 
 	#[cfg(debug_assertions)]
 	client._db_push().await.unwrap();
 
+	info!("Database schema is up to date!");
+
 	let state = Arc::new(AppState::new(client));
 
+	info!("Server is running on http://0.0.0.0:3000");
 	web::server(move || {
 		App::new()
 			.state(state.clone())
@@ -94,7 +98,7 @@ async fn main() -> std::io::Result<()> {
 			.service(delete_user)
 			.service(index)
 	})
-	.bind("127.0.0.1:3000")?
+	.bind("0.0.0.0:3000")?
 	.run()
 	.await
 }

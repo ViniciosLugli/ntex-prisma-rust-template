@@ -19,4 +19,4 @@ rustfmt.toml
 db.rs
 
 # Cache
-cache
+.cache

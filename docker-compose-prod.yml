@@ -5,6 +5,6 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        command: cargo run --release
+        command: sh -c "cargo prisma generate && cargo run --release"
         depends_on:
             - 'postgres'
