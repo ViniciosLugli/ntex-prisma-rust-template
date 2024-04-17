@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+    postgres:
+        extends:
+            file: docker-compose-db.yml
+            service: postgres
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: cargo run
+        volumes:
+            - .:/usr/src/app
+        depends_on:
+            - 'postgres'
+        env_file:
+            - .env

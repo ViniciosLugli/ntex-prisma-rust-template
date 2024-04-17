@@ -1,53 +1,96 @@
 # Ntex Rust Template
 
-This template provides a starting point for building web services with [Ntex](https://github.com/ntex-rs/ntex), an asynchronous web framework for Rust aimed at making high-performance, scalable web services with minimal effort.
+This template provides a robust starting point for building web services with [Ntex](https://github.com/ntex-rs/ntex), an asynchronous web framework for Rust. Ntex aims to facilitate the development of high-performance, scalable web services with minimal boilerplate code.
 
 ## Features
 
--   **Ntex Web Framework:** Leverages Ntex for building efficient, scalable web applications with support for asynchronous I/O.
--   **Serde for Serialization/Deserialization:** Utilizes Serde to effortlessly convert Rust structs into JSON and vice versa.
--   **CORS Support:** Configured with `ntex-cors` for handling Cross-Origin Resource Sharing (CORS), making your API accessible from different domains.
--   **Environment Logging and Configuration:** Uses `pretty_env_logger` for advanced logging capabilities and `dotenvy` for loading environment configurations, simplifying the management of environment variables.
+1. **Asynchronous Web Framework:**
+    - Utilizes Ntex, a high-performance async web framework designed for Rust, ensuring efficient handling of I/O-bound operations and a non-blocking server architecture.
+2. **Serde Integration:**
+    - Fully integrates with Serde for robust data serialization and deserialization. This feature simplifies exchanging JSON data between servers and clients, seamlessly mapping Rust structures to JSON format and vice versa.
+3. **CORS Support:**
+    - Configured with `ntex-cors`, which facilitates handling Cross-Origin Resource Sharing (CORS). This allows your web services to be securely accessible from different domains, essential for modern web applications that interact with multiple services.
+4. **Environment Logging:**
+    - Incorporates `pretty_env_logger`, an environment-aware logger for detailed and configurable logging that helps in monitoring and debugging the application efficiently during development and in production.
+5. **Configuration Management:**
+    - Uses `dotenvy` to manage environment variables through a `.env` file, streamlining the configuration process and ensuring sensitive credentials are kept out of the code.
+6. **Thread-Safe State Management:**
+    - Implements state management using `Arc<Mutex<>>` to safely share and modify application state between multiple async tasks, crucial for maintaining data integrity and consistency.
+7. **CRUD API Endpoints:**
+    - Provides built-in CRUD (Create, Read, Update, Delete) operations for user entities via RESTful endpoints, demonstrating practical usage of database operations (Prisma Client) within the Ntex framework.
+8. **Docker Support:**
+    - Includes Docker configurations for both development and production environments, ensuring easy setup and deployability across different systems with containerization technology.
+9. **Automated Testing:**
+    - Comes with a pre-configured test module using Ntex's test framework, which facilitates automated testing of your endpoints and helps maintain code quality and reliability.
 
 ## Prerequisites
 
-To use this template, you need Rust installed on your system. If Rust isn't installed yet, follow the installation guide on the [Rust official website](https://www.rust-lang.org/tools/install).
+-   **Rust**: Ensure you have Rust installed on your system. If not, you can install it from the [official Rust website](https://www.rust-lang.org/tools/install).
 
-## Setup
+## Quick Start
 
-Clone this repository and navigate to the project directory:
+### Clone the Repository
 
 ```bash
-git clone git@github.com:ViniciosLugli/ntex-rust-template.git
+git clone https://github.com/ViniciosLugli/ntex-rust-template.git
 cd ntex-rust-template
 ```
 
-## Configuration
+### Set Up the Environment
 
-Create a `.env` file in the project's root directory. This file can be used to store environment variables:
+Create a `.env` file in the root directory of the project to manage environment variables easily:
 
-```env
-# Example of .env content
+```plaintext
+# Server log level
 RUST_LOG=info
+
+# Database URL of docker container
+DATABASE_URL="postgresql://postgres:postgres@postgres:5432/postgres?schema=public"
 ```
 
-## Running the Application
+### Build and Run
 
-Execute the following command to run the application:
+Build and run the development server using:
 
 ```bash
 cargo run
 ```
 
-The server will be available at `127.0.0.1:3000`. Access the service using a web browser or tools like `curl`:
+For a production build, use:
+
+```bash
+cargo run --release
+```
+
+The server will start at `http://127.0.0.1:3000`. You can access the service using a browser or a tool like curl:
 
 ```bash
 curl http://localhost:3000
 ```
 
+### Using Docker for Development
+
+To use Docker for development, ensure you have Docker installed, then run:
+
+```bash
+docker-compose -f docker-compose-dev.yml up --build
+```
+
+This command builds the application using Docker and runs it alongside a Postgres database container.
+
+### Deployment
+
+For deploying the application with Docker, use:
+
+```bash
+docker-compose -f docker-compose-prod.yml up --build
+```
+
+This setup is optimized for production by minimizing rebuild times and ensuring the application runs efficiently.
+
 ## Testing
 
-The project comes with basic tests. Execute the tests using:
+The project includes a test suite of all the endpoints. You can run the tests using:
 
 ```bash
 cargo test
