@@ -62,7 +62,7 @@ For a production build, use:
 cargo run --release
 ```
 
-The server will start at `http://127.0.0.1:3000`. You can access the service using a browser or a tool like curl:
+The server will start at `http://0.0.0.0:3000`. You can access the service using a browser or a tool like curl:
 
 ```bash
 curl http://localhost:3000

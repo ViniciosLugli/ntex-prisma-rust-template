@@ -9,10 +9,13 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        tty: true
         command: sh -c "cargo prisma generate && cargo run"
         volumes:
             - .:/usr/src/app
         depends_on:
             - 'postgres'
+        expose:
+            - '3000'
         env_file:
             - .env

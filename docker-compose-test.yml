@@ -5,6 +5,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        tty: true
         command: sh -c "cargo prisma generate && cargo test"
         volumes:
             - .:/usr/src/app
