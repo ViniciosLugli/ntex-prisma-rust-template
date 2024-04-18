@@ -4,10 +4,11 @@ services:
     app:
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.base
         tty: true
         command: sh -c "cargo prisma generate && cargo run --release"
-        depends_on:
-            - 'postgres'
-        expose:
-            - '3000'
+        volumes:
+            - .:/usr/src/app
+            - .cache/cargo-cache:/usr/local/cargo/target
+        ports:
+            - '3000:3000'

@@ -50,23 +50,27 @@ DATABASE_URL="postgresql://postgres:postgres@postgres:5432/postgres?schema=publi
 
 ### Build and Run
 
+Generate the database schema using:
+
+```bash
+cargo prisma generate
+```
+
 Build and run the development server using:
 
 ```bash
 cargo run
 ```
 
-For a production build, use:
-
-```bash
-cargo run --release
-```
+> Or you can use `cargo run --release` for a deployment-ready build.
 
 The server will start at `http://0.0.0.0:3000`. You can access the service using a browser or a tool like curl:
 
 ```bash
 curl http://localhost:3000
 ```
+
+> You should see a greeting message from the server. For more API endpoints, refer to the [API Endpoints Overview](#api-endpoints-overview) section.
 
 ### Using Docker for Development
 
@@ -78,7 +82,7 @@ docker-compose -f docker-compose-dev.yml up --build
 
 This command builds the application using Docker and runs it alongside a Postgres database container.
 
-### Deployment
+### Using Docker for Deployment
 
 For deploying the application with Docker, use:
 
@@ -88,10 +92,117 @@ docker-compose -f docker-compose-prod.yml up --build
 
 This setup is optimized for production by minimizing rebuild times and ensuring the application runs efficiently.
 
-## Testing
+## Using Docker for Testing
 
 The project includes a test suite of all the endpoints. You can run the tests using:
 
 ```bash
-cargo test
+docker-compose -f docker-compose-test.yml up --build
+```
+
+## API Endpoints Overview
+
+The template provides a set of RESTful endpoints for managing user data, including creating, retrieving, and deleting users. Below are the specifications and examples for each.
+
+### 1. Home Endpoint
+
+**Endpoint**: `/`
+
+**Method**: GET
+
+**Description**: Returns a greeting message.
+
+**CURL Command**:
+
+```bash
+curl http://localhost:3000
+```
+
+**Sample Response**:
+
+```json
+{
+	"message": "Hello world!"
+}
+```
+
+### 2. Get Users
+
+**Endpoint**: `/user`
+
+**Method**: GET
+
+**Description**: Retrieves a list of all users.
+
+**CURL Command**:
+
+```bash
+curl http://localhost:3000/user
+```
+
+**Sample Response**:
+
+```json
+[
+	{
+		"id": 1,
+		"name": "Alice Johnson",
+		"email": "alice@example.com"
+	},
+	{
+		"id": 2,
+		"name": "Bob Smith",
+		"email": "bob@example.com"
+	}
+]
+```
+
+### 3. Create User
+
+**Endpoint**: `/user`
+
+**Method**: POST
+
+**Description**: Creates a new user with the provided name and email.
+
+**CURL Command**:
+
+```bash
+curl -X POST http://localhost:3000/user \
+     -H 'Content-Type: application/json' \
+     -d '{"name": "Charlie Brown", "email": "charlie@example.com"}'
+```
+
+**Sample Response**:
+
+```json
+{
+	"id": 3,
+	"name": "Charlie Brown",
+	"email": "charlie@example.com"
+}
+```
+
+### 4. Delete User
+
+**Endpoint**: `/user/{id}`
+
+**Method**: DELETE
+
+**Description**: Deletes a user based on the provided user ID.
+
+**CURL Command**:
+
+```bash
+curl -X DELETE http://localhost:3000/user/3
+```
+
+**Sample Response**:
+
+```json
+{
+	"id": 3,
+	"name": "Charlie Brown",
+	"email": "charlie@example.com"
+}
 ```

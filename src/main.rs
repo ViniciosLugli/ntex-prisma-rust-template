@@ -33,7 +33,7 @@ struct UserInput {
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 struct User {
-	r#id: i32,
+	id: i32,
 	name: String,
 	email: String,
 }
@@ -72,8 +72,15 @@ async fn main() -> std::io::Result<()> {
 	let client = PrismaClient::_builder().build().await.unwrap();
 	info!("Connected to database!");
 
+	println!("Running migrations...");
+
 	#[cfg(debug_assertions)]
 	client._db_push().await.unwrap();
+
+	println!("Migrating database...");
+
+	#[cfg(not(debug_assertions))]
+	client._migrate_deploy().await?;
 
 	info!("Database schema is up to date!");
 

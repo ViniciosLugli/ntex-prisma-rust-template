@@ -5,4 +5,4 @@ target
 .vscode
 renovate.json
 .cache
-db.rs
+src/db.rs
