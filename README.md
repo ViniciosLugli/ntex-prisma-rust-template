@@ -14,8 +14,8 @@ This template provides a robust starting point for building web services with [N
     - Incorporates `pretty_env_logger`, an environment-aware logger for detailed and configurable logging that helps in monitoring and debugging the application efficiently during development and in production.
 5. **Configuration Management:**
     - Uses `dotenvy` to manage environment variables through a `.env` file, streamlining the configuration process and ensuring sensitive credentials are kept out of the code.
-6. **Thread-Safe State Management:**
-    - Implements state management using `Arc<Mutex<>>` to safely share and modify application state between multiple async tasks, crucial for maintaining data integrity and consistency.
+6. **State Management:**
+    - Implements state management using `Arc<>` to share state across multiple handlers, enabling efficient data sharing and synchronization between different parts of the application.
 7. **CRUD API Endpoints:**
     - Provides built-in CRUD (Create, Read, Update, Delete) operations for user entities via RESTful endpoints, demonstrating practical usage of database operations (Prisma Client) within the Ntex framework.
 8. **Docker Support:**
